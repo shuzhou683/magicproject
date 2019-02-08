@@ -1,27 +1,14 @@
 language: java
-
 jdk:
-  - openjdk8
-  - oraclejdk9
-
-branches:
-  only:
-    - master
-    - "3.0"
-
-# Below this line is configuration for deploying to the Sonatype OSS repo
-# https://knowm.org/configure-travis-ci-to-deploy-snapshots/
-before_install: "git clone -b travis `git config --get remote.origin.url` target/travis"
-after_success: "mvn deploy --settings target/travis/settings.xml"
-
-env:
-  global:
-    - secure: "roD5yXZPN4QswyOEyTX4vC/ylfCuf7Ej/VXFf6LcIAnerCwRfWMY5a0nw76mrqldt5BWv1XOT3CHQUO4qlVZliSXxBfuLOUqdkxQCU6LQLFFhWR9SY0mSx/luA2HqASz9R9sZJocCYqTFS+NYclDBbgSInvkBbBbPOP9pK2hm9s="
-    - secure: "qJ2Z4Rcnwns8Qa2yAemJ1ns7dMLq1lfgZmNTpT2WkmAd6GZazTJqiKk4iQdiubMwHE9LRZodSA4V/APA+/0pePfjZ7AK4H6LiTgHFQk62PRRmkOMnodqYzC/wEuDJ6tybj2WGrCZN7ioHkEVqSsO0zCzftni5vXi9yzshTqdv0Q="
+  - openjdk7
+  - oraclejdk8
+  
+after_success:
+  - mvn clean cobertura:cobertura coveralls:report
 
 before_install:
-  - wget https://github.com/FasterXML/jackson-dataformat-xml/archive/1fb0bba1a18863bbde81050434d571f194d6eff3.zip
-  - unzip 1fb0bba1a18863bbde81050434d571f194d6eff3.zip
-  - cp -rT jackson-dataformat-xml-1fb0bba1a18863bbde81050434d571f194d6eff3 ./
-  - rm -r jackson-dataformat-xml-1fb0bba1a18863bbde81050434d571f194d6eff3
-  - rm 1fb0bba1a18863bbde81050434d571f194d6eff3.zip
+  - wget https://github.com/JSQLParser/JSqlParser/archive/f1724a46857793587db4b64a76e76c682dd1472d.zip
+  - unzip f1724a46857793587db4b64a76e76c682dd1472d.zip
+  - cp -rT JSqlParser-f1724a46857793587db4b64a76e76c682dd1472d ./
+  - rm -r JSqlParser-f1724a46857793587db4b64a76e76c682dd1472d
+  - rm f1724a46857793587db4b64a76e76c682dd1472d.zip
