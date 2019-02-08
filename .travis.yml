@@ -1,14 +1,23 @@
 language: java
+dist: trusty
 jdk:
-  - openjdk7
-  - oraclejdk8
-  
+- oraclejdk8
+- openjdk7
+- openjdk10
+- oraclejdk11
+script: "mvn verify failsafe:integration-test failsafe:verify"
+branches:
+  except:
+  - travis
+notifications:
+  email: false
 after_success:
-  - mvn clean cobertura:cobertura coveralls:report
+- mvn clean cobertura:cobertura coveralls:cobertura
+
 
 before_install:
-  - wget https://github.com/JSQLParser/JSqlParser/archive/f1724a46857793587db4b64a76e76c682dd1472d.zip
-  - unzip f1724a46857793587db4b64a76e76c682dd1472d.zip
-  - cp -rT JSqlParser-f1724a46857793587db4b64a76e76c682dd1472d ./
-  - rm -r JSqlParser-f1724a46857793587db4b64a76e76c682dd1472d
-  - rm f1724a46857793587db4b64a76e76c682dd1472d.zip
+  - wget https://github.com/DiUS/java-faker/archive/8ed300d4e91240c2ba89e770acc369c29f5088bb.zip
+  - unzip 8ed300d4e91240c2ba89e770acc369c29f5088bb.zip
+  - cp -rT java-faker-8ed300d4e91240c2ba89e770acc369c29f5088bb ./
+  - rm -r java-faker-8ed300d4e91240c2ba89e770acc369c29f5088bb
+  - rm 8ed300d4e91240c2ba89e770acc369c29f5088bb.zip
