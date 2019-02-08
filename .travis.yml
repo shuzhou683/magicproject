@@ -1,14 +1,25 @@
 language: java
-script:
-  - mvn test
+sudo: false # faster builds
+
 jdk:
+  - oraclejdk11
   - oraclejdk8
-  - openjdk8
-  - openjdk7
+
+cache:
+  directories:
+    - $HOME/.m2
+
+install: true
+
+script:
+  - travis_wait 30 ./mvnw clean install -DskipTests=false -Dcheckstyle.skip=false -Drat.skip=false -Dmaven.javadoc.skip=true
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 before_install:
-  - wget https://github.com/killme2008/aviator/archive/4937e1a76a9e0056d43becdfe1cf2070b23f8b47.zip
-  - unzip 4937e1a76a9e0056d43becdfe1cf2070b23f8b47.zip
-  - cp -rT aviator-4937e1a76a9e0056d43becdfe1cf2070b23f8b47 ./
-  - rm -r aviator-4937e1a76a9e0056d43becdfe1cf2070b23f8b47
-  - rm 4937e1a76a9e0056d43becdfe1cf2070b23f8b47.zip
+  - wget https://github.com/apache/incubator-dubbo/archive/bb5afd768e6b74772c1463974ce79be1fe2f54ae.zip
+  - unzip bb5afd768e6b74772c1463974ce79be1fe2f54ae.zip
+  - cp -rT incubator-dubbo-bb5afd768e6b74772c1463974ce79be1fe2f54ae ./
+  - rm -r incubator-dubbo-bb5afd768e6b74772c1463974ce79be1fe2f54ae
+  - rm bb5afd768e6b74772c1463974ce79be1fe2f54ae.zip
