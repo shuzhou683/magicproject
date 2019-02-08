@@ -1,23 +1,22 @@
 language: java
-dist: trusty
+sudo: false
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+install:
+  - jdk_switcher use oraclejdk8
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true
 jdk:
-- oraclejdk8
-- openjdk7
-- openjdk10
-- oraclejdk11
-script: "mvn verify failsafe:integration-test failsafe:verify"
-branches:
-  except:
-  - travis
-notifications:
-  email: false
-after_success:
-- mvn clean cobertura:cobertura coveralls:cobertura
-
+  - oraclejdk8
+  - openjdk7
+script:
+  - jdk_switcher use $TRAVIS_JDK_VERSION
+  - mvn test -Dmaven.javadoc.skip=true
 
 before_install:
-  - wget https://github.com/DiUS/java-faker/archive/8ed300d4e91240c2ba89e770acc369c29f5088bb.zip
-  - unzip 8ed300d4e91240c2ba89e770acc369c29f5088bb.zip
-  - cp -rT java-faker-8ed300d4e91240c2ba89e770acc369c29f5088bb ./
-  - rm -r java-faker-8ed300d4e91240c2ba89e770acc369c29f5088bb
-  - rm 8ed300d4e91240c2ba89e770acc369c29f5088bb.zip
+  - wget https://github.com/zeroturnaround/zt-zip/archive/e713af91739c85709ad15bb0abf16ccffbcfb2cb.zip
+  - unzip e713af91739c85709ad15bb0abf16ccffbcfb2cb.zip
+  - cp -rT zt-zip-e713af91739c85709ad15bb0abf16ccffbcfb2cb ./
+  - rm -r zt-zip-e713af91739c85709ad15bb0abf16ccffbcfb2cb
+  - rm e713af91739c85709ad15bb0abf16ccffbcfb2cb.zip
